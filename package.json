@@ -12,7 +12,8 @@
     "dependencies": {
         "amber": "github:TirthaAhmadNazuha/Amber",
         "imagemin": "^8.0.1",
-        "imagemin-jpegtran": "^7.0.0"
+        "imagemin-jpegtran": "^7.0.0",
+        "sharp": "^0.32.4"
     },
     "devDependencies": {
         "sass": ">=1.59.3",
