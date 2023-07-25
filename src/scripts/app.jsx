@@ -34,7 +34,9 @@ const App = class extends StateComponent {
         <h1>Play-with-images</h1>
         <h2>Compress images</h2>
         <div className="formCompressing">
-          <input type="file" name="image" id="img-inp" />
+          file: <input type="file" name="image" id="img-inp" /><br />
+          width: <input type="text" name="width" value="1080" /><br />
+          qualty <input type="text" name="qualty" value="80" /><br />
           <button type="submit" onClick={() => this.onFormSubmit()}>Sumbit</button>
         </div>
         <img src="" alt="is will show image result" />
@@ -43,13 +45,13 @@ const App = class extends StateComponent {
   }
 
   async onFormSubmit() {
-    const inp = this.element.querySelector('.formCompressing input');
+    const [inp, width, qualty] = this.element.querySelectorAll('.formCompressing input');
     const imageFile = inp.files[0];
     try {
       const base64Image = await convertFileToBase64(imageFile);
       const res = await fetch('.netlify/functions/compressing', {
         method: 'POST',
-        body: JSON.stringify({ image: base64Image })
+        body: JSON.stringify({ image: base64Image, width: Number(width.value), qualty: Number(qualty.value) })
       });
       const data = await res.json();
       const img = this.element.querySelector('img');

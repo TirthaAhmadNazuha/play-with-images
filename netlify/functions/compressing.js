@@ -2,6 +2,7 @@ exports.handler = async function (event, context) {
   try {
     const body = JSON.parse(event.body);
     const base64Image = body.image; // Assuming you send the image data as "image" in the request body
+    const { quality, width } = body;
 
     const sharp = (await import('sharp')).default;
 
@@ -10,8 +11,8 @@ exports.handler = async function (event, context) {
 
     // Compress JPEG image using sharp
     const compressedBuffer = await sharp(imageBuffer)
-      .resize({ width: 1080 })
-      .jpeg({ quality: 50, progressive: true }) // Adjust quality as needed
+      .resize({ width })
+      .jpeg({ quality, progressive: true }) // Adjust quality as needed
       .toBuffer();
 
     // Base64 encode the compressed image
