@@ -12,7 +12,7 @@ exports.handler = async function (event, context) {
     const imageBuffer = Buffer.from(base64Image, 'base64');
 
     // Compress JPEG image
-    const compressedBuffer = await imagemin.buffer(imageBuffer, {
+    const compressedBuffer = await imagemin.default.buffer(imageBuffer, {
       plugins: [
         imageminJpegtran.default({
           progressive: true,
