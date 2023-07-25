@@ -37,6 +37,7 @@ const App = class extends StateComponent {
           <input type="file" name="image" id="img-inp" />
           <button type="submit" onClick={() => this.onFormSubmit()}>Sumbit</button>
         </div>
+        <img src="" alt="is will show image result" />
       </div >
     );
   }
@@ -50,8 +51,9 @@ const App = class extends StateComponent {
         method: 'POST',
         body: JSON.stringify({ image: base64Image })
       });
-      const data = await res.text();
-      console.log(data);
+      const data = await res.json();
+      const img = this.element.querySelector('img');
+      img.src = `data:image/jpeg;base64,${data.compressedImage}`;
     } catch (err) { console.error(err); }
   }
 
