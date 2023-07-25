@@ -14,7 +14,7 @@ exports.handler = async function (event, context) {
     // Compress JPEG image
     const compressedBuffer = await imagemin.buffer(imageBuffer, {
       plugins: [
-        imageminJpegtran({
+        imageminJpegtran.default({
           progressive: true,
           arithmetic: false,
           optimizationLevel: 7,
