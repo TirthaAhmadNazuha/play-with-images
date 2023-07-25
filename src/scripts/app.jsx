@@ -54,9 +54,9 @@ const App = class extends StateComponent {
         method: 'POST',
         body: JSON.stringify({ image: base64Image, width: Number(width.value) || null, qualty: Number(qualty.value || '0') || 100, type: type === 'jpg' ? 'jpeg' : type })
       });
-      const data = await res.json();
+      const data = await res.text();
       const img = this.element.querySelector('img');
-      img.src = `data:image/${imageFile.type};base64,${await data.compressedImage}`;
+      img.src = `data:image/${imageFile.type};base64,${data}`;
       img.name = imageFile.name;
     } catch (err) { console.error(err); }
   }

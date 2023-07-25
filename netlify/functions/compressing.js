@@ -16,7 +16,7 @@ exports.handler = async function (event, context) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ compressedImage: compressedBase64 }),
+      body: compressedBase64,
     };
   } catch (error) {
     return {
