@@ -43,7 +43,7 @@ const App = class extends StateComponent {
 
   async onFormSubmit() {
     const inp = this.element.querySelector('.formCompressing input');
-    const imageFile = imageInput.files[0];
+    const imageFile = inp.files[0];
     try {
       const base64Image = await convertFileToBase64(imageFile);
       const res = await fetch('.netlify/functions/compressing', {
