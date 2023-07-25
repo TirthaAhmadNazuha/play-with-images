@@ -56,7 +56,7 @@ const App = class extends StateComponent {
       });
       const data = await res.text();
       const img = this.element.querySelector('img');
-      img.src = `data:image/${imageFile.type};base64,${data}`;
+      img.src = `data:image/${type};base64,${data}`;
       img.name = imageFile.name;
     } catch (err) { console.error(err); }
   }
