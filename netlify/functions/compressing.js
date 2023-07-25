@@ -17,7 +17,7 @@ exports.handler = async function (event, context) {
         imageminJpegtran.default({
           progressive: true,
           arithmetic: false,
-          optimizationLevel: 7,
+          optimizationLevel: 2,
         }),
       ],
     });
