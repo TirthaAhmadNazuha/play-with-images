@@ -49,13 +49,15 @@ const App = class extends StateComponent {
     const imageFile = inp.files[0];
     try {
       const base64Image = await convertFileToBase64(imageFile);
+      const type = imageFile.type.split('/')[1];
       const res = await fetch('.netlify/functions/compressing', {
         method: 'POST',
-        body: JSON.stringify({ image: base64Image, width: Number(width.value), qualty: Number(qualty.value) })
+        body: JSON.stringify({ image: base64Image, width: Number(width.value) || null, qualty: Number(qualty.value || '0') || 100, type: type === 'jpg' ? 'jpeg' : type })
       });
       const data = await res.json();
       const img = this.element.querySelector('img');
-      img.src = `data:image/jpeg;base64,${data.compressedImage}`;
+      img.src = `data:image/${imageFile.type};base64,${data.compressedImage}`;
+      img.name = imageFile.name;
     } catch (err) { console.error(err); }
   }
 
