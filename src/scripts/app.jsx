@@ -1,6 +1,24 @@
 import { StateComponent, fullyPrepared } from 'amber';
 import '../styles/index.sass';
 
+function convertFileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const base64String = reader.result.split(',')[1];
+      resolve(base64String);
+    };
+
+    reader.onerror = () => {
+      reject(new Error('Failed to read the file.'));
+    };
+
+    // Read the file as a data URL (Base64-encoded string)
+    reader.readAsDataURL(file);
+  });
+}
+
 const App = class extends StateComponent {
   constructor() {
     super();
@@ -23,14 +41,18 @@ const App = class extends StateComponent {
     );
   }
 
-  onFormSubmit() {
+  async onFormSubmit() {
     const inp = this.element.querySelector('.formCompressing input');
-    const res = fetch('.netlify/functions/compressing', {
-      method: 'POST',
-      files: inp.files
-    });
-    res.then((data) => console.log(data));
-    res.catch((err) => console.error(err));
+    const imageFile = imageInput.files[0];
+    try {
+      const base64Image = await convertFileToBase64(imageFile);
+      const res = await fetch('.netlify/functions/compressing', {
+        method: 'POST',
+        body: JSON.stringify({ image: base64Image })
+      });
+      const data = await res.text();
+      console.log(data);
+    } catch (err) { console.error(err); }
   }
 
   async onConnected() {
