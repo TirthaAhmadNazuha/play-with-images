@@ -32,8 +32,7 @@ exports.handler = async function (event, context) {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Image compression failed.' }),
-      message: error.message,
+      body: JSON.stringify({ error: `Image compression failed. Error: ${error}` }),
     };
   }
 };
