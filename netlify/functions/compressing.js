@@ -10,7 +10,7 @@ exports.handler = async function (event, context) {
     const modify = sharp(imageBuffer);
     modify[type]({ quality, progressive: true });
     if (width) modify.resize({ width });
-    const compressedBuffer = modify.toBuffer();
+    const compressedBuffer = await modify.toBuffer();
 
     const compressedBase64 = compressedBuffer.toString('base64');
 
