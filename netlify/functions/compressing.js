@@ -10,7 +10,8 @@ exports.handler = async function (event, context) {
 
     // Compress JPEG image using sharp
     const compressedBuffer = await sharp(imageBuffer)
-      .jpeg({ quality: 80, progressive: true }) // Adjust quality as needed
+      .resize({ width: 1080 })
+      .jpeg({ quality: 50, progressive: true }) // Adjust quality as needed
       .toBuffer();
 
     // Base64 encode the compressed image
