@@ -1,10 +1,12 @@
-const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
-
 exports.handler = async function (event, context) {
   try {
     const body = JSON.parse(event.body);
     const base64Image = body.image; // Assuming you send the image data as "image" in the request body
+
+    const [imagemin, imageminJpegtran] = await Promise.all([
+      import('imagemin'),
+      import('imagemin-jpegtran'),
+    ]);
 
     // Decode Base64 image data to a Buffer
     const imageBuffer = Buffer.from(base64Image, 'base64');
